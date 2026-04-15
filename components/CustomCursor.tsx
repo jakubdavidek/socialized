@@ -1,0 +1,97 @@
+'use client'
+
+import { motion, useMotionValue, useSpring } from 'framer-motion'
+import { useEffect, useState } from 'react'
+
+export default function CustomCursor() {
+  const [mounted, setMounted] = useState(false)
+  const [isPointer, setIsPointer] = useState(false)
+  const [isHidden, setIsHidden] = useState(false)
+
+  const rawX = useMotionValue(-100)
+  const rawY = useMotionValue(-100)
+
+  // Outer ring: lags behind (smooth follow)
+  const ringX = useSpring(rawX, { stiffness: 120, damping: 20, mass: 0.5 })
+  const ringY = useSpring(rawY, { stiffness: 120, damping: 20, mass: 0.5 })
+
+  // Inner dot: snappy (near-instant)
+  const dotX = useSpring(rawX, { stiffness: 500, damping: 30, mass: 0.1 })
+  const dotY = useSpring(rawY, { stiffness: 500, damping: 30, mass: 0.1 })
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (!mounted) return
+    const onMove = (e: MouseEvent) => {
+      rawX.set(e.clientX)
+      rawY.set(e.clientY)
+
+      const el = e.target as HTMLElement
+      setIsPointer(!!el.closest('a, button, [data-cursor="pointer"]'))
+    }
+
+    const onLeave = () => setIsHidden(true)
+    const onEnter = () => setIsHidden(false)
+
+    window.addEventListener('mousemove', onMove)
+    document.documentElement.addEventListener('mouseleave', onLeave)
+    document.documentElement.addEventListener('mouseenter', onEnter)
+
+    return () => {
+      window.removeEventListener('mousemove', onMove)
+      document.documentElement.removeEventListener('mouseleave', onLeave)
+      document.documentElement.removeEventListener('mouseenter', onEnter)
+    }
+  }, [mounted, rawX, rawY])
+
+  if (!mounted) return null
+
+  return (
+    <>
+      {/* Outer ring — mix-blend-mode: difference inverts colors on hover */}
+      <motion.div
+        className="fixed top-0 left-0 z-[9999] pointer-events-none mix-blend-difference"
+        style={{
+          x: ringX,
+          y: ringY,
+          translateX: '-50%',
+          translateY: '-50%',
+        }}
+        animate={{ opacity: isHidden ? 0 : 1 }}
+      >
+        <motion.div
+          className="rounded-full border border-white bg-transparent"
+          animate={{
+            width: isPointer ? 64 : 40,
+            height: isPointer ? 64 : 40,
+          }}
+          transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+        />
+      </motion.div>
+
+      {/* Inner dot */}
+      <motion.div
+        className="fixed top-0 left-0 z-[9999] pointer-events-none mix-blend-difference"
+        style={{
+          x: dotX,
+          y: dotY,
+          translateX: '-50%',
+          translateY: '-50%',
+        }}
+        animate={{ opacity: isHidden ? 0 : 1 }}
+      >
+        <motion.div
+          className="rounded-full bg-white"
+          animate={{
+            width: isPointer ? 10 : 5,
+            height: isPointer ? 10 : 5,
+          }}
+          transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+        />
+      </motion.div>
+    </>
+  )
+}
