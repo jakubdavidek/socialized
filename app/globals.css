@@ -24,17 +24,21 @@ body {
   background-color: #000;
   color: #fff;
   overflow-x: hidden;
-  cursor: none;
 }
 
-/* Hide default cursor on all interactive elements */
-a,
-button,
-[role='button'],
-input,
-textarea,
-select {
-  cursor: none;
+/* cursor: none only applies when the device actually has a pointer that
+   can hover — i.e. a mouse. Touch screens have no cursor to hide, and
+   forcing cursor: none there breaks accessibility tap indicators. */
+@media (hover: hover) and (pointer: fine) {
+  body,
+  a,
+  button,
+  [role='button'],
+  input,
+  textarea,
+  select {
+    cursor: none;
+  }
 }
 
 /* Text selection */

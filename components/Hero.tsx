@@ -10,7 +10,8 @@ import {
 import { useRef, useEffect, useState } from 'react'
 import MagneticButton from './MagneticButton'
 
-const LINES = ['WE SHAPE', 'DIGITAL', 'IDENTITIES.']
+const LINES_DESKTOP = ['WE SHAPE', 'DIGITAL', 'IDENTITIES.']
+const LINES_MOBILE = ['WE', 'SHAPE', 'DIGITAL', 'IDENTITIES.']
 const EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 /* ─── Detect touch / narrow viewport ───────────────────────────
@@ -32,14 +33,22 @@ function useIsMobile(): boolean {
 /* ─── Single masked-reveal headline line ───────────────────────
    overflow-hidden on the wrapper acts as the clip mask;
    the span slides up from below it. */
-function RevealLine({ text, delay }: { text: string; delay: number }) {
+function RevealLine({
+  text,
+  delay,
+  fontSize,
+  leading,
+}: {
+  text: string
+  delay: number
+  fontSize: string
+  leading: string
+}) {
   return (
-    <div className="overflow-hidden leading-[0.92]">
+    <div className={`overflow-hidden ${leading}`}>
       <motion.span
-        className="block font-syne font-extrabold text-white leading-[0.92]"
-        /* Lower floor (2.5rem) so "IDENTITIES." fits on 320 px phones.
-           9vw hits sweet-spot on tablets; 9.5rem caps on large monitors. */
-        style={{ fontSize: 'clamp(2.5rem, 9vw, 9.5rem)' }}
+        className={`block font-syne font-extrabold text-white ${leading}`}
+        style={{ fontSize }}
         initial={{ y: '106%', rotate: 2 }}
         animate={{ y: '0%', rotate: 0 }}
         transition={{ duration: 1.4, delay, ease: EXPO }}
@@ -77,7 +86,7 @@ export default function Hero() {
   })
 
   useEffect(() => {
-    if (isMobile) return // no-op on touch; avoids unnecessary listeners
+    if (isMobile) return
     const handle = (e: MouseEvent) => {
       mouseX.set(e.clientX - window.innerWidth / 2)
       mouseY.set(e.clientY - window.innerHeight / 2)
@@ -86,9 +95,116 @@ export default function Hero() {
     return () => window.removeEventListener('mousemove', handle)
   }, [isMobile, mouseX, mouseY])
 
+  /* ── Mobile layout ─────────────────────────────────────────
+     Three flex children pushed to top / center / bottom via
+     justify-between. The splash screen covers the SSR flash
+     (both server and first hydration render the desktop branch
+     since isMobile starts false). */
+  if (isMobile) {
+    return (
+      <section
+        ref={sectionRef}
+        className="relative min-h-[100dvh] bg-black overflow-hidden flex flex-col justify-between"
+      >
+        {/* ── Subtle grid ── */}
+        <div
+          className="absolute inset-0 opacity-[0.04] pointer-events-none"
+          style={{
+            backgroundImage:
+              'linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)',
+            backgroundSize: '90px 90px',
+          }}
+        />
+
+        {/* ── Ambient orb ── */}
+        <motion.div
+          className="absolute top-[-10%] right-[-5%] w-[80vw] h-[80vw] rounded-full pointer-events-none"
+          style={{
+            background:
+              'radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%)',
+          }}
+          animate={{ scale: [1, 1.08, 1] }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+        />
+
+        {/* ── TOP: sub-label ── */}
+        <div className="relative z-10 px-6 pt-24">
+          <div className="overflow-hidden">
+            <motion.p
+              className="font-space text-[10px] tracking-[0.4em] uppercase text-white/40"
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              transition={{ duration: 1, delay: 0.3, ease: EXPO }}
+            >
+              Online Brand Agency — Est. 2017
+            </motion.p>
+          </div>
+        </div>
+
+        {/* ── MIDDLE: massive headline ── */}
+        <div className="relative z-10 px-6">
+          {LINES_MOBILE.map((line, i) => (
+            <RevealLine
+              key={line}
+              text={line}
+              delay={0.5 + i * 0.1}
+              fontSize="clamp(3rem, 18vw, 5.5rem)"
+              leading="leading-[1.05]"
+            />
+          ))}
+        </div>
+
+        {/* ── BOTTOM: CTA ── */}
+        <div className="relative z-10 px-6 pb-12">
+          <motion.div
+            className="flex flex-col gap-5"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 1.5, ease: EXPO }}
+          >
+            <MagneticButton strength={0}>
+              <a
+                href="#contact"
+                data-cursor="pointer"
+                className="group relative inline-flex items-center justify-center gap-4 border border-white/60 hover:border-white active:border-white text-white font-space font-medium tracking-[0.2em] uppercase text-xs px-8 py-4 overflow-hidden transition-colors duration-300 w-full min-h-[52px]"
+              >
+                <span className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 group-active:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)]" />
+                <span className="relative z-10 group-hover:text-black group-active:text-black transition-colors duration-300">
+                  Start a Project
+                </span>
+                <motion.span
+                  className="relative z-10 group-hover:text-black group-active:text-black transition-colors duration-300"
+                  animate={{ x: [0, 4, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+                >
+                  →
+                </motion.span>
+              </a>
+            </MagneticButton>
+
+            <span className="font-space text-white/25 text-[10px] tracking-widest uppercase text-center">
+              Scroll to explore
+            </span>
+          </motion.div>
+        </div>
+
+        {/* ── Year ── */}
+        <motion.div
+          className="absolute bottom-8 left-6 z-10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2, duration: 0.8 }}
+        >
+          <span className="font-space text-white/20 text-[10px] tracking-widest">
+            ©2025
+          </span>
+        </motion.div>
+      </section>
+    )
+  }
+
+  /* ── Desktop layout ────────────────────────────────────────── */
   return (
-    // 100svh = "small viewport height" — excludes mobile browser chrome
-    // so content is never cut off by the address bar on iOS / Android.
     <section
       ref={sectionRef}
       className="relative h-[100svh] min-h-[560px] bg-black overflow-hidden flex flex-col justify-end"
@@ -105,7 +221,7 @@ export default function Hero() {
 
       {/* ── Ambient orb ── */}
       <motion.div
-        className="absolute top-[-10%] right-[-5%] w-[80vw] h-[80vw] sm:w-[60vw] sm:h-[60vw] rounded-full pointer-events-none"
+        className="absolute top-[-10%] right-[-5%] w-[60vw] h-[60vw] rounded-full pointer-events-none"
         style={{
           background:
             'radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%)',
@@ -116,17 +232,13 @@ export default function Hero() {
 
       {/* ── Main content ── */}
       <motion.div
-        className="relative z-10 px-6 sm:px-8 md:px-12 pb-12 sm:pb-14 md:pb-20"
-        /* Parallax only on desktop; static on mobile to prevent jitter */
-        style={{
-          y: isMobile ? 0 : contentY,
-          opacity: isMobile ? 1 : contentOpacity,
-        }}
+        className="relative z-10 px-8 md:px-12 pb-20"
+        style={{ y: contentY, opacity: contentOpacity }}
       >
         {/* Sub-label */}
-        <div className="overflow-hidden mb-4 sm:mb-6 md:mb-8">
+        <div className="overflow-hidden mb-8">
           <motion.p
-            className="font-space text-[10px] sm:text-xs md:text-sm tracking-[0.4em] uppercase text-white/40"
+            className="font-space text-xs md:text-sm tracking-[0.4em] uppercase text-white/40"
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             transition={{ duration: 1, delay: 0.3, ease: EXPO }}
@@ -135,35 +247,35 @@ export default function Hero() {
           </motion.p>
         </div>
 
-        {/* Headline — tilt only on desktop, capped to 90vw so it never overflows */}
+        {/* Headline */}
         <motion.div
-          className="mb-8 sm:mb-12 md:mb-16 max-w-[90vw]"
-          style={
-            isMobile
-              ? {}
-              : { rotateX: tiltX, rotateY: tiltY, perspective: 1000 }
-          }
+          className="mb-16 max-w-[90vw]"
+          style={{ rotateX: tiltX, rotateY: tiltY, perspective: 1000 }}
         >
-          {LINES.map((line, i) => (
-            <RevealLine key={line} text={line} delay={0.5 + i * 0.12} />
+          {LINES_DESKTOP.map((line, i) => (
+            <RevealLine
+              key={line}
+              text={line}
+              delay={0.5 + i * 0.12}
+              fontSize="clamp(2.5rem, 9vw, 9.5rem)"
+              leading="leading-[0.92]"
+            />
           ))}
         </motion.div>
 
-        {/* CTA row — stacks vertically on mobile, inline on sm+ */}
+        {/* CTA row */}
         <motion.div
-          className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 md:gap-10"
+          className="flex items-center gap-10"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 1.5, ease: EXPO }}
         >
-          {/* strength=0 on mobile: magnetic pull requires a mouse */}
-          <MagneticButton strength={isMobile ? 0 : 0.4}>
+          <MagneticButton strength={0.4}>
             <a
               href="#contact"
               data-cursor="pointer"
-              className="group relative inline-flex items-center justify-center sm:justify-start gap-4 border border-white/60 hover:border-white active:border-white text-white font-space font-medium tracking-[0.2em] uppercase text-xs px-8 py-4 overflow-hidden transition-colors duration-300 w-full sm:w-auto min-h-[52px]"
+              className="group relative inline-flex items-center gap-4 border border-white/60 hover:border-white active:border-white text-white font-space font-medium tracking-[0.2em] uppercase text-xs px-8 py-4 overflow-hidden transition-colors duration-300 min-h-[52px]"
             >
-              {/* Hover / active fill */}
               <span className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 group-active:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)]" />
               <span className="relative z-10 group-hover:text-black group-active:text-black transition-colors duration-300">
                 Start a Project
@@ -178,15 +290,15 @@ export default function Hero() {
             </a>
           </MagneticButton>
 
-          <span className="font-space text-white/25 text-[10px] sm:text-xs tracking-widest uppercase text-center sm:text-left">
+          <span className="font-space text-white/25 text-xs tracking-widest uppercase">
             Scroll to explore
           </span>
         </motion.div>
       </motion.div>
 
-      {/* ── Scroll indicator — hidden on small phones (< sm) ── */}
+      {/* ── Scroll indicator ── */}
       <motion.div
-        className="absolute bottom-8 right-6 sm:right-8 md:right-12 hidden sm:flex flex-col items-center gap-3 z-10"
+        className="absolute bottom-8 right-8 md:right-12 flex flex-col items-center gap-3 z-10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2.2, duration: 0.8 }}
@@ -216,12 +328,12 @@ export default function Hero() {
 
       {/* ── Year ── */}
       <motion.div
-        className="absolute bottom-8 left-6 sm:left-8 md:left-12 z-10"
+        className="absolute bottom-8 left-8 md:left-12 z-10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2, duration: 0.8 }}
       >
-        <span className="font-space text-white/20 text-[10px] sm:text-xs tracking-widest">
+        <span className="font-space text-white/20 text-xs tracking-widest">
           ©2025
         </span>
       </motion.div>

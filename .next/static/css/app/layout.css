@@ -792,9 +792,6 @@ video {
 .visible {
   visibility: visible;
 }
-.static {
-  position: static;
-}
 .fixed {
   position: fixed;
 }
@@ -828,11 +825,17 @@ video {
 .left-6 {
   left: 1.5rem;
 }
+.left-8 {
+  left: 2rem;
+}
 .right-0 {
   right: 0px;
 }
 .right-6 {
   right: 1.5rem;
+}
+.right-8 {
+  right: 2rem;
 }
 .right-\[-5\%\] {
   right: -5%;
@@ -891,9 +894,6 @@ video {
 .mb-2 {
   margin-bottom: 0.5rem;
 }
-.mb-4 {
-  margin-bottom: 1rem;
-}
 .mb-6 {
   margin-bottom: 1.5rem;
 }
@@ -914,9 +914,6 @@ video {
 }
 .inline-block {
   display: inline-block;
-}
-.inline {
-  display: inline;
 }
 .flex {
   display: flex;
@@ -948,6 +945,9 @@ video {
 .h-\[40vh\] {
   height: 40vh;
 }
+.h-\[60vw\] {
+  height: 60vw;
+}
 .h-\[80vw\] {
   height: 80vw;
 }
@@ -956,6 +956,9 @@ video {
 }
 .h-px {
   height: 1px;
+}
+.min-h-\[100dvh\] {
+  min-height: 100dvh;
 }
 .min-h-\[52px\] {
   min-height: 52px;
@@ -974,6 +977,9 @@ video {
 }
 .w-\[52px\] {
   width: 52px;
+}
+.w-\[60vw\] {
+  width: 60vw;
 }
 .w-\[80vw\] {
   width: 80vw;
@@ -1197,11 +1203,17 @@ video {
 .pb-12 {
   padding-bottom: 3rem;
 }
+.pb-20 {
+  padding-bottom: 5rem;
+}
 .pt-1 {
   padding-top: 0.25rem;
 }
 .pt-20 {
   padding-top: 5rem;
+}
+.pt-24 {
+  padding-top: 6rem;
 }
 .pt-6 {
   padding-top: 1.5rem;
@@ -1258,6 +1270,9 @@ video {
 }
 .leading-\[0\.92\] {
   line-height: 0.92;
+}
+.leading-\[1\.05\] {
+  line-height: 1.05;
 }
 .leading-\[1\.1\] {
   line-height: 1.1;
@@ -1421,17 +1436,21 @@ body {
   background-color: #000;
   color: #fff;
   overflow-x: hidden;
-  cursor: none;
 }
 
-/* Hide default cursor on all interactive elements */
-a,
-button,
-[role='button'],
-input,
-textarea,
-select {
-  cursor: none;
+/* cursor: none only applies when the device actually has a pointer that
+   can hover — i.e. a mouse. Touch screens have no cursor to hide, and
+   forcing cursor: none there breaks accessibility tap indicators. */
+@media (hover: hover) and (pointer: fine) {
+  body,
+  a,
+  button,
+  [role='button'],
+  input,
+  textarea,
+  select {
+    cursor: none;
+  }
 }
 
 /* Text selection */
@@ -1577,20 +1596,12 @@ select {
     margin-bottom: 0.75rem;
   }
 
-  .sm\:mb-12 {
-    margin-bottom: 3rem;
-  }
-
   .sm\:mb-16 {
     margin-bottom: 4rem;
   }
 
   .sm\:mb-20 {
     margin-bottom: 5rem;
-  }
-
-  .sm\:mb-6 {
-    margin-bottom: 1.5rem;
   }
 
   .sm\:mb-8 {
@@ -1605,10 +1616,6 @@ select {
     margin-top: 0.5rem;
   }
 
-  .sm\:flex {
-    display: flex;
-  }
-
   .sm\:h-14 {
     height: 3.5rem;
   }
@@ -1617,32 +1624,8 @@ select {
     height: 3px;
   }
 
-  .sm\:h-\[60vw\] {
-    height: 60vw;
-  }
-
   .sm\:w-6 {
     width: 1.5rem;
-  }
-
-  .sm\:w-\[60vw\] {
-    width: 60vw;
-  }
-
-  .sm\:w-auto {
-    width: auto;
-  }
-
-  .sm\:flex-row {
-    flex-direction: row;
-  }
-
-  .sm\:items-center {
-    align-items: center;
-  }
-
-  .sm\:justify-start {
-    justify-content: flex-start;
   }
 
   .sm\:gap-16 {
@@ -1704,10 +1687,6 @@ select {
     padding-top: 2rem;
   }
 
-  .sm\:text-left {
-    text-align: left;
-  }
-
   .sm\:text-4xl {
     font-size: 2.25rem;
     line-height: 2.5rem;
@@ -1746,20 +1725,12 @@ select {
     margin-bottom: 2.5rem;
   }
 
-  .md\:mb-16 {
-    margin-bottom: 4rem;
-  }
-
   .md\:mb-20 {
     margin-bottom: 5rem;
   }
 
   .md\:mb-32 {
     margin-bottom: 8rem;
-  }
-
-  .md\:mb-8 {
-    margin-bottom: 2rem;
   }
 
   .md\:block {
@@ -1794,10 +1765,6 @@ select {
     justify-content: space-between;
   }
 
-  .md\:gap-10 {
-    gap: 2.5rem;
-  }
-
   .md\:gap-8 {
     gap: 2rem;
   }
@@ -1825,10 +1792,6 @@ select {
   .md\:py-7 {
     padding-top: 1.75rem;
     padding-bottom: 1.75rem;
-  }
-
-  .md\:pb-20 {
-    padding-bottom: 5rem;
   }
 
   .md\:pt-40 {
