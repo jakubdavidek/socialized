@@ -5,7 +5,8 @@
       "Bash(dir \"C:\\\\code\\\\socialized\")",
       "Bash(echo \"EXIT: $?\")",
       "Bash(npm install *)",
-      "Bash(npx next *)"
+      "Bash(npx next *)",
+      "Bash(npx tsc *)"
     ]
   }
 }

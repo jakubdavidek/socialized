@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { useState } from 'react'
 
@@ -14,13 +14,7 @@ const EXPO_OUT: [number, number, number, number] = [0.16, 1, 0.3, 1]
 const EXPO_IN_OUT: [number, number, number, number] = [0.76, 0, 0.24, 1]
 
 export default function Navigation() {
-  const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-  const { scrollY } = useScroll()
-
-  useMotionValueEvent(scrollY, 'change', (v) => {
-    setScrolled(v > 60)
-  })
 
   const closeMenu = () => setMenuOpen(false)
 
@@ -28,22 +22,15 @@ export default function Navigation() {
     <>
       {/* ── Header bar ── */}
       <motion.header
-        className="fixed top-0 left-0 right-0 z-50 px-6 sm:px-8 md:px-12 py-5 sm:py-6 md:py-7 flex items-center justify-between"
+        className="fixed top-0 left-0 right-0 z-[100] px-6 sm:px-8 md:px-12 py-5 sm:py-6 md:py-7 flex items-center justify-between"
         initial={{ opacity: 0, y: -16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, delay: 1.4, ease: EXPO_OUT }}
       >
-        {/* Frosted backdrop — only kicks in after scroll or while menu is open */}
-        <motion.div
-          className="absolute inset-0 border-b border-white/10 pointer-events-none"
-          animate={{
-            backgroundColor:
-              scrolled || menuOpen ? 'rgba(0,0,0,0.9)' : 'rgba(0,0,0,0)',
-            backdropFilter:
-              scrolled || menuOpen ? 'blur(12px)' : 'blur(0px)',
-          }}
-          transition={{ duration: 0.35 }}
-        />
+        {/* Solid backdrop — always opaque.
+            Glassmorphism variant: swap bg-black for bg-black/75 and add
+            [backdrop-filter:blur(12px)] if you prefer the frosted look. */}
+        <div className="absolute inset-0 bg-black border-b border-white/10 pointer-events-none" />
 
         {/* Logo */}
         <Link
@@ -103,7 +90,7 @@ export default function Navigation() {
         {menuOpen && (
           <motion.div
             key="mobile-menu"
-            className="fixed inset-0 z-40 bg-black flex flex-col justify-center px-6 sm:px-8 md:hidden"
+            className="fixed inset-0 z-[99] bg-black flex flex-col justify-center px-6 sm:px-8 md:hidden"
             initial={{ clipPath: 'inset(0 0 100% 0)' }}
             animate={{ clipPath: 'inset(0 0 0% 0)' }}
             exit={{ clipPath: 'inset(0 0 100% 0)' }}
