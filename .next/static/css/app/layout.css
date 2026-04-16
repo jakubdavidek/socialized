@@ -997,6 +997,9 @@ video {
 .h-px {
   height: 1px;
 }
+.h-8 {
+  height: 2rem;
+}
 .min-h-\[100dvh\] {
   min-height: 100dvh;
 }
@@ -1288,6 +1291,9 @@ video {
 }
 .pb-14 {
   padding-bottom: 3.5rem;
+}
+.pb-10 {
+  padding-bottom: 2.5rem;
 }
 .text-center {
   text-align: center;

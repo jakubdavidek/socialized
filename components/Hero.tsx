@@ -81,13 +81,23 @@ export default function Hero() {
   }, [isMobile, mouseX, mouseY])
 
   /* ── Mobile ──────────────────────────────────────────────────
-     font-size: clamp(1.8rem, 10.5vw, 4rem)
-       Syne Extrabold + tracking-tight (−0.025em) → ratio ≈ 0.76
-       "IDENTITIES." worst case @ 320px:
-         10.5vw = 33.6px → 11 × 33.6 × 0.76 = 281px < 272px (avail)
-         → safe with ~4px margin on each side at text-center
-       @ 375px: 39.4px → 11 × 39.4 × 0.76 = 329px < 327px ✓
-       @ 390px: 40.9px → 11 × 40.9 × 0.76 = 342px = 342px ✓  */
+
+     FONT-SIZE: clamp(1.4rem, 8vw, 3.2rem)
+     ─────────────────────────────────────
+     Syne Extrabold practical glyph ratio (browser-measured) ≈ 0.78
+     tracking-tight reduces effective ratio to ≈ 0.75
+     Worst-case word: "IDENTITIES." — 11 chars
+     Calculation @ 320px: 8vw = 25.6px → 11 × 25.6 × 0.75 = 211px < 272px ✓
+     Calculation @ 431px: 8vw = 34.5px → 11 × 34.5 × 0.75 = 285px < 383px ✓
+     Calculation @ 767px: 8vw = 61.4px → 11 × 61.4 × 0.75 = 507px < 719px ✓
+
+     LAYOUT: headline + CTA in one group, gap-8 between them
+     ────────────────────────────────────────────────────────
+     The group sits in a flex-1 container with justify-center,
+     so it naturally floats at vertical center regardless of
+     screen height. Sub-label and footer stay pinned at edges.
+     This eliminates the dead space without needing justify-between
+     or hardcoded margins.                                        */
   if (isMobile) {
     return (
       <section
@@ -112,7 +122,7 @@ export default function Hero() {
           transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
         />
 
-        {/* Sub-label */}
+        {/* ── Sub-label — top edge ── */}
         <div className="relative z-10 px-6 pt-16">
           <div className="overflow-hidden">
             <motion.p
@@ -125,52 +135,80 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ── Centered headline — vertically centered in remaining flex space */}
-        <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-4">
+        {/* ── Central group: headline + CTA ──────────────────────
+            flex-1 + justify-center → group floats at midpoint.
+            gap-8 (32px) tightens heading↔button relationship so
+            they read as a single typographic unit, not two
+            separate elements with dead air between them.         */}
+        <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 gap-8">
+
+          {/* Heading block */}
           <div className="w-full">
             {LINES_MOBILE.map((line, i) => (
               <RevealLine
                 key={line}
                 text={line}
                 delay={0.5 + i * 0.1}
-                fontSize="clamp(1.8rem, 10.5vw, 4rem)"
+                /* clamp floor 1.4rem prevents tiny text on very small
+                   screens; 8vw scales linearly with viewport; 3.2rem
+                   cap prevents oversizing on large phones (≥400px).   */
+                fontSize="clamp(1.4rem, 8vw, 3.2rem)"
                 leading="leading-[1.08]"
                 align="center"
               />
             ))}
           </div>
+
+          {/* CTA — directly below heading, no extra spacer needed */}
+          <motion.div
+            className="w-full flex flex-col gap-3"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 1.5, ease: EXPO }}
+          >
+            <MagneticButton strength={0}>
+              <a
+                href="#contact"
+                data-cursor="pointer"
+                className="group relative inline-flex items-center justify-center gap-4 border border-white/60 hover:border-white active:border-white text-white font-space font-medium tracking-[0.2em] uppercase text-xs px-8 py-4 overflow-hidden transition-colors duration-300 w-full min-h-[52px]"
+              >
+                <span className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 group-active:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)]" />
+                <span className="relative z-10 group-hover:text-black group-active:text-black transition-colors duration-300">
+                  Start a Project
+                </span>
+                <motion.span
+                  className="relative z-10 group-hover:text-black group-active:text-black transition-colors duration-300"
+                  animate={{ x: [0, 4, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+                >
+                  →
+                </motion.span>
+              </a>
+            </MagneticButton>
+
+            <p className="font-space text-white/25 text-[10px] tracking-widest uppercase text-center">
+            </p>
+          </motion.div>
         </div>
 
-        {/* ── CTA block pinned to bottom */}
+        {/* ── Footer row — bottom edge ── */}
         <motion.div
-          className="relative z-10 px-6 pb-12 flex flex-col gap-4"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 1.5, ease: EXPO }}
+          className="relative z-10 px-6 pb-10 flex items-center justify-between"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2, duration: 0.8 }}
         >
-          <MagneticButton strength={0}>
-            <a
-              href="#contact"
-              data-cursor="pointer"
-              className="group relative inline-flex items-center justify-center gap-4 border border-white/60 hover:border-white active:border-white text-white font-space font-medium tracking-[0.2em] uppercase text-xs px-8 py-4 overflow-hidden transition-colors duration-300 w-full min-h-[52px]"
-            >
-              <span className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 group-active:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)]" />
-              <span className="relative z-10 group-hover:text-black group-active:text-black transition-colors duration-300">
-                Start a Project
-              </span>
-              <motion.span
-                className="relative z-10 group-hover:text-black group-active:text-black transition-colors duration-300"
-                animate={{ x: [0, 4, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-              >
-                →
-              </motion.span>
-            </a>
-          </MagneticButton>
-
-          <div className="flex items-center justify-between">
-            <span className="font-space text-white/20 text-[10px] tracking-widest">©2025</span>
-            <span className="font-space text-white/25 text-[10px] tracking-widest uppercase"></span>
+          <span className="font-space text-white/20 text-[10px] tracking-widest"></span>
+          {/* Animated scroll line — replaces the vertical desktop indicator */}
+          <div className="relative w-px h-8 bg-white/10 overflow-hidden">
+            <motion.div
+              className="absolute top-0 w-full bg-white/40"
+              animate={{
+                height: ['0%', '100%', '100%', '0%'],
+                top: ['0%', '0%', '100%', '100%'],
+              }}
+              transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut', times: [0, 0.4, 0.6, 1] }}
+            />
           </div>
         </motion.div>
       </section>
@@ -293,7 +331,7 @@ export default function Hero() {
         animate={{ opacity: 1 }}
         transition={{ delay: 2, duration: 0.8 }}
       >
-        <span className="font-space text-white/20 text-xs tracking-widest">©2025</span>
+        <span className="font-space text-white/20 text-xs tracking-widest"></span>
       </motion.div>
     </section>
   )
