@@ -6,8 +6,8 @@ import { useRef } from 'react'
 const EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 const STATS = [
-  { value: '50+', label: 'Brands Built' },
-  { value: '8+', label: 'Years of Craft' },
+  { value: '15+', label: 'Brands Built' },
+  { value: '2+', label: 'Years of Craft' },
   { value: '∞', label: 'Potential Unlocked' },
 ]
 
