@@ -7,10 +7,10 @@ import MagneticButton from './MagneticButton'
 const EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 const SOCIALS = [
-  { label: 'Instagram', href: '#' },
-  { label: 'Twitter / X', href: '#' },
+  { label: 'Instagram', href: 'https://instagram.com/socialized.cz' },
+  { label: 'Twitter / X', href: 'https://x.com/socialized.cz' },
   { label: 'LinkedIn', href: '#' },
-  { label: 'Dribbble', href: '#' },
+  { label: 'Youtube', href: 'https://youtube.com/socialized.cz' },
 ]
 
 export default function Footer() {
@@ -109,7 +109,7 @@ export default function Footer() {
 
           {/* Copyright */}
           <span className="font-space text-white/20 text-[10px] tracking-widest shrink-0">
-            © 2025 Socialized
+            © 2026 Socialized
           </span>
         </motion.div>
 

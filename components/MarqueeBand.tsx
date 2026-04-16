@@ -11,10 +11,10 @@ const ROW_1 = [
 ]
 
 const ROW_2 = [
-  'VISUAL SYSTEMS', '◆', 'STRATEGY', '◆',
-  'WEB DESIGN', '◆', 'MOTION', '◆',
-  'VISUAL SYSTEMS', '◆', 'STRATEGY', '◆',
-  'WEB DESIGN', '◆', 'MOTION', '◆',
+  'VISUAL SYSTEMS', '◆', 'STRATEGY', '◆', 'VISUAL SYSTEMS', '◆',
+  'WEB DESIGN', '◆', 'MOTION', '◆', 'WEB DESIGN', '◆', 'MOTION', '◆',
+  'VISUAL SYSTEMS', '◆', 'STRATEGY', '◆', 'VISUAL SYSTEMS', '◆', 'STRATEGY', '◆',
+  'WEB DESIGN', '◆', 'MOTION', '◆', 'WEB DESIGN', '◆', 'MOTION', '◆',
 ]
 
 function Track({
@@ -38,11 +38,10 @@ function Track({
         {[...items, ...items].map((item, i) => (
           <span
             key={i}
-            className={`shrink-0 font-syne font-extrabold tracking-widest text-black ${
-              large
+            className={`shrink-0 font-syne font-extrabold tracking-widest text-black ${large
                 ? 'text-3xl sm:text-4xl md:text-5xl lg:text-6xl px-4 sm:px-6'
                 : 'text-xs sm:text-sm md:text-base px-3 sm:px-5'
-            }`}
+              }`}
           >
             {item}
           </span>

@@ -11,7 +11,7 @@ import { useRef, useEffect, useState } from 'react'
 import MagneticButton from './MagneticButton'
 
 const LINES_DESKTOP = ['WE SHAPE', 'DIGITAL', 'IDENTITIES.']
-const LINES_MOBILE = ['WE', 'SHAPE', 'DIGITAL', 'IDENTITIES.']
+const LINES_MOBILE = ['WE SHAPE', 'DIGITAL', 'IDENTITIES.']
 const EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 /* ─── Detect touch / narrow viewport ───────────────────────────
@@ -38,16 +38,18 @@ function RevealLine({
   delay,
   fontSize,
   leading,
+  nowrap = true,
 }: {
   text: string
   delay: number
   fontSize: string
   leading: string
+  nowrap?: boolean
 }) {
   return (
     <div className={`overflow-hidden ${leading}`}>
       <motion.span
-        className={`block font-syne font-extrabold text-white ${leading}`}
+        className={`block font-syne font-extrabold text-white ${nowrap ? 'whitespace-nowrap' : 'whitespace-normal'} ${leading}`}
         style={{ fontSize }}
         initial={{ y: '106%', rotate: 2 }}
         animate={{ y: '0%', rotate: 0 }}
@@ -104,14 +106,14 @@ export default function Hero() {
     return (
       <section
         ref={sectionRef}
-        className="relative min-h-[100dvh] bg-black overflow-hidden flex flex-col justify-between"
+        className="relative min-h-[100dvh] bg-black overflow-hidden flex flex-col"
       >
-        {/* ── Subtle grid ── */}
+        {/* ── Subtle grid — slightly softer on mobile ── */}
         <div
-          className="absolute inset-0 opacity-[0.04] pointer-events-none"
+          className="absolute inset-0 pointer-events-none"
           style={{
             backgroundImage:
-              'linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)',
+              'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
             backgroundSize: '90px 90px',
           }}
         />
@@ -128,7 +130,7 @@ export default function Hero() {
         />
 
         {/* ── TOP: sub-label ── */}
-        <div className="relative z-10 px-6 pt-24">
+        <div className="relative z-10 px-6 pt-20 pb-2">
           <div className="overflow-hidden">
             <motion.p
               className="font-space text-[10px] tracking-[0.4em] uppercase text-white/40"
@@ -136,26 +138,27 @@ export default function Hero() {
               animate={{ y: 0 }}
               transition={{ duration: 1, delay: 0.3, ease: EXPO }}
             >
-              Online Brand Agency — Est. 2017
             </motion.p>
           </div>
         </div>
 
-        {/* ── MIDDLE: massive headline ── */}
-        <div className="relative z-10 px-6">
-          {LINES_MOBILE.map((line, i) => (
-            <RevealLine
-              key={line}
-              text={line}
-              delay={0.5 + i * 0.1}
-              fontSize="clamp(3rem, 18vw, 5.5rem)"
-              leading="leading-[1.05]"
-            />
-          ))}
-        </div>
+        {/* ── MAIN: headline + CTA distributed evenly across remaining space ── */}
+        <div className="relative z-10 flex-1 flex flex-col justify-evenly px-6 py-4">
+          {/* Massive 3-line headline */}
+          <div>
+            {LINES_MOBILE.map((line, i) => (
+              <RevealLine
+                key={line}
+                text={line}
+                delay={0.5 + i * 0.1}
+                fontSize="clamp(1.8rem, 10.2vw, 5rem)"
+                leading="leading-[1.05]"
+                nowrap={false}
+              />
+            ))}
+          </div>
 
-        {/* ── BOTTOM: CTA ── */}
-        <div className="relative z-10 px-6 pb-12">
+          {/* CTA — now floats in the middle of the screen, not huddled at bottom */}
           <motion.div
             className="flex flex-col gap-5"
             initial={{ opacity: 0, y: 20 }}
@@ -183,7 +186,6 @@ export default function Hero() {
             </MagneticButton>
 
             <span className="font-space text-white/25 text-[10px] tracking-widest uppercase text-center">
-              Scroll to explore
             </span>
           </motion.div>
         </div>
@@ -196,7 +198,6 @@ export default function Hero() {
           transition={{ delay: 2, duration: 0.8 }}
         >
           <span className="font-space text-white/20 text-[10px] tracking-widest">
-            ©2025
           </span>
         </motion.div>
       </section>
@@ -243,7 +244,6 @@ export default function Hero() {
             animate={{ y: 0 }}
             transition={{ duration: 1, delay: 0.3, ease: EXPO }}
           >
-            Online Brand Agency — Est. 2017
           </motion.p>
         </div>
 
@@ -291,7 +291,6 @@ export default function Hero() {
           </MagneticButton>
 
           <span className="font-space text-white/25 text-xs tracking-widest uppercase">
-            Scroll to explore
           </span>
         </motion.div>
       </motion.div>
@@ -307,7 +306,6 @@ export default function Hero() {
           className="font-space text-white/30 text-[10px] tracking-[0.3em] uppercase"
           style={{ writingMode: 'vertical-rl' }}
         >
-          Scroll
         </span>
         <div className="relative w-px h-16 bg-white/10 overflow-hidden">
           <motion.div
@@ -334,7 +332,6 @@ export default function Hero() {
         transition={{ delay: 2, duration: 0.8 }}
       >
         <span className="font-space text-white/20 text-xs tracking-widest">
-          ©2025
         </span>
       </motion.div>
     </section>
