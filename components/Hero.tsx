@@ -174,7 +174,7 @@ export default function Hero() {
               >
                 <span className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 group-active:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)]" />
                 <span className="relative z-10 group-hover:text-black group-active:text-black transition-colors duration-300">
-                  Zahájit projekt
+                  Začít projekt
                 </span>
                 <motion.span
                   className="relative z-10 group-hover:text-black group-active:text-black transition-colors duration-300"

@@ -94,27 +94,6 @@ export default function PageTransition() {
                 Socialized
               </motion.span>
             </div>
-
-            {/* Sub-label */}
-            <div className="overflow-hidden">
-              <motion.span
-                className="block font-space text-[10px] sm:text-xs tracking-[0.45em] uppercase text-white/35"
-                initial={{ y: '105%' }}
-                animate={{ y: 0 }}
-                transition={{ duration: 0.9, delay: 0.45, ease: REVEAL }}
-              >
-                Online Brand Agency
-              </motion.span>
-            </div>
-
-            {/* Decorative line — draws itself in */}
-            <motion.div
-              className="w-12 h-px bg-white/20"
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              style={{ originX: 0.5 }}
-              transition={{ duration: 0.7, delay: 0.9, ease: REVEAL }}
-            />
           </div>
 
           {/* ── Bottom: scroll prompt ── */}

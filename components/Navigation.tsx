@@ -66,7 +66,7 @@ export default function Navigation() {
           {(['Nabídka', 'Zavřít'] as const).map((label, i) => (
             <motion.span
               key={label}
-              className="absolute inset-0 flex items-center justify-end font-space text-white text-[10px] tracking-[0.35em] uppercase"
+              className="absolute inset-0 flex items-center justify-end font-space text-white text-[8px] tracking-[0.35em] uppercase"
               initial={false}
               animate={{
                 y: menuOpen
@@ -74,8 +74,8 @@ export default function Navigation() {
                     ? '-100%'
                     : '0%'
                   : i === 0
-                  ? '0%'
-                  : '100%',
+                    ? '0%'
+                    : '100%',
               }}
               transition={{ duration: 0.3, ease: EXPO_IN_OUT }}
             >
@@ -131,10 +131,10 @@ export default function Navigation() {
               transition={{ duration: 0.4, delay: 0.45 }}
             >
               <span className="font-space text-white/30 text-[10px] tracking-[0.3em] uppercase">
-                hello@socialized.agency
+                info@socialized.cz
               </span>
               <span className="font-space text-white/20 text-[10px] tracking-widest">
-                © 2025
+                © 2026
               </span>
             </motion.div>
           </motion.div>
