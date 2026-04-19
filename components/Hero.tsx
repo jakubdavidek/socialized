@@ -10,8 +10,8 @@ import {
 import { useRef, useEffect, useState } from 'react'
 import MagneticButton from './MagneticButton'
 
-const LINES_DESKTOP = ['WE SHAPE', 'DIGITAL', 'IDENTITIES.']
-const LINES_MOBILE = ['WE SHAPE', 'DIGITAL', 'IDENTITIES.']
+const LINES_DESKTOP = ['TVOŘÍME', 'DIGITÁLNÍ', 'IDENTITY.']
+const LINES_MOBILE = ['TVOŘÍME', 'DIGITÁLNÍ', 'IDENTITY.']
 const EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 function useIsMobile(): boolean {
@@ -174,7 +174,7 @@ export default function Hero() {
               >
                 <span className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 group-active:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)]" />
                 <span className="relative z-10 group-hover:text-black group-active:text-black transition-colors duration-300">
-                  Start a Project
+                  Zahájit projekt
                 </span>
                 <motion.span
                   className="relative z-10 group-hover:text-black group-active:text-black transition-colors duration-300"
@@ -280,7 +280,7 @@ export default function Hero() {
             >
               <span className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 group-active:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)]" />
               <span className="relative z-10 group-hover:text-black group-active:text-black transition-colors duration-300">
-                Start a Project
+                Začít spolupráci
               </span>
               <motion.span
                 className="relative z-10 group-hover:text-black group-active:text-black transition-colors duration-300"

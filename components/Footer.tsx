@@ -43,7 +43,7 @@ export default function Footer() {
           transition={{ duration: 0.8, ease: EXPO }}
         >
           <span className="w-5 sm:w-6 h-px bg-white/30 shrink-0" />
-          Start a Conversation
+          Začněte konverzaci
         </motion.p>
 
         {/* ── Giant email ──────────────────────────────────────────────

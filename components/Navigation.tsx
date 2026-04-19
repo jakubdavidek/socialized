@@ -5,9 +5,9 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 const NAV_LINKS = [
-  { label: 'Work', href: '#work' },
-  { label: 'About', href: '#about' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Práce', href: '#work' },
+  { label: 'O nás', href: '#about' },
+  { label: 'Kontakt', href: '#contact' },
 ]
 
 const EXPO_OUT: [number, number, number, number] = [0.16, 1, 0.3, 1]
@@ -61,9 +61,9 @@ export default function Navigation() {
         <button
           onClick={() => setMenuOpen((v) => !v)}
           className="relative md:hidden z-10 h-4 w-[52px] overflow-hidden"
-          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-label={menuOpen ? 'Zavřít menu' : 'Otevřít menu'}
         >
-          {(['Menu', 'Close'] as const).map((label, i) => (
+          {(['Nabídka', 'Zavřít'] as const).map((label, i) => (
             <motion.span
               key={label}
               className="absolute inset-0 flex items-center justify-end font-space text-white text-[10px] tracking-[0.35em] uppercase"

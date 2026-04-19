@@ -17,12 +17,12 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
-  title: 'Socialized — Online Brand Agency',
+  title: 'Socialized — Online Brand Agentura',
   description:
-    'We shape digital identities. An online brand agency specializing in brand strategy, visual identity, and digital presence.',
+    'Tvoříme digitální identity. Online brand agentura specializující se na brandovou strategii, vizuální identitu a digitální přítomnost.',
   openGraph: {
-    title: 'Socialized — Online Brand Agency',
-    description: 'We shape digital identities.',
+    title: 'Socialized — Online Brand Agentura',
+    description: 'Tvoříme digitální identity.',
     type: 'website',
   },
 }
@@ -33,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${syne.variable} ${spaceGrotesk.variable}`}>
+    <html lang="cs" className={`${syne.variable} ${spaceGrotesk.variable}`}>
       <body className="bg-black text-white antialiased noise-overlay">
         {children}
       </body>

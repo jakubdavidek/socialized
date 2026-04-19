@@ -8,24 +8,24 @@ const EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1]
 const SERVICES = [
   {
     number: '01',
-    title: 'Brand Strategy',
+    title: 'Brandová strategie',
     description:
-      'We dig deep — studying your positioning, competitors, and audience — to forge a brand strategy that cuts through the noise and speaks directly to the people who matter.',
-    tags: ['Positioning', 'Research', 'Messaging'],
+      'Jdeme do hloubky — zkoumáme váš positioning, konkurenci i cílové skupiny — abychom vytvořili brandovou strategii, která prorazí hlukem a promluví přímo k těm, na kterých záleží.',
+    tags: ['Positioning', 'Výzkum', 'Messaging'],
   },
   {
     number: '02',
-    title: 'Visual Identity',
+    title: 'Vizuální identita',
     description:
-      'Logos, typefaces, color systems, iconography, and motion — we craft a cohesive visual language that works across every touchpoint and stands the test of time.',
-    tags: ['Logo', 'Typography', 'Motion'],
+      'Loga, písma, barevné systémy, ikonografie a motion — vytváříme ucelený vizuální jazyk, který funguje na každém touchpointu a odolává zkoušce časem.',
+    tags: ['Logo', 'Typografie', 'Motion'],
   },
   {
     number: '03',
-    title: 'Digital Presence',
+    title: 'Digitální přítomnost',
     description:
-      'From high-conversion websites to social media ecosystems, we build and manage your entire digital footprint so your brand dominates online from day one.',
-    tags: ['Web', 'Social', 'Content'],
+      'Od vysoce konverzních webů až po ekosystémy sociálních médií — budujeme a spravujeme celou vaši digitální stopu, aby vaše značka dominovala online od prvního dne.',
+    tags: ['Web', 'Sociální sítě', 'Obsah'],
   },
 ]
 
@@ -147,7 +147,7 @@ export default function Services() {
               animate={headingInView ? { y: 0 } : {}}
               transition={{ duration: 1.1, ease: EXPO }}
             >
-              Our Services
+              Naše služby
             </motion.h2>
           </div>
 
@@ -157,7 +157,7 @@ export default function Services() {
             animate={headingInView ? { opacity: 1 } : {}}
             transition={{ duration: 0.8, delay: 0.3 }}
           >
-            What we offer
+            Co nabízíme
           </motion.span>
         </div>
 

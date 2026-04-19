@@ -4,16 +4,16 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 
 const ROW_1 = [
-  'SOCIALIZED', '◆', 'BRAND IDENTITY', '◆',
-  'DIGITAL PRESENCE', '◆', 'ONLINE AGENCY', '◆',
-  'SOCIALIZED', '◆', 'BRAND IDENTITY', '◆',
-  'DIGITAL PRESENCE', '◆', 'ONLINE AGENCY', '◆',
+  'SOCIALIZED', '◆', 'BRAND IDENTITA', '◆',
+  'DIGITÁLNÍ PŘÍTOMNOST', '◆', 'ONLINE AGENTURA', '◆',
+  'SOCIALIZED', '◆', 'BRAND IDENTITA', '◆',
+  'DIGITÁLNÍ PŘÍTOMNOST', '◆', 'ONLINE AGENTURA', '◆',
 ]
 
 const ROW_2 = [
-  'VISUAL SYSTEMS', '◆', 'STRATEGY', '◆', 'VISUAL SYSTEMS', '◆',
+  'VIZUÁLNÍ SYSTÉMY', '◆', 'STRATEGIE', '◆', 'VIZUÁLNÍ SYSTÉMY', '◆',
   'WEB DESIGN', '◆', 'MOTION', '◆', 'WEB DESIGN', '◆', 'MOTION', '◆',
-  'VISUAL SYSTEMS', '◆', 'STRATEGY', '◆', 'VISUAL SYSTEMS', '◆', 'STRATEGY', '◆',
+  'VIZUÁLNÍ SYSTÉMY', '◆', 'STRATEGIE', '◆', 'VIZUÁLNÍ SYSTÉMY', '◆', 'STRATEGIE', '◆',
   'WEB DESIGN', '◆', 'MOTION', '◆', 'WEB DESIGN', '◆', 'MOTION', '◆',
 ]
 

@@ -6,9 +6,9 @@ import { useRef } from 'react'
 const EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 const STATS = [
-  { value: '15+', label: 'Brands Built' },
-  { value: '2+', label: 'Years of Craft' },
-  { value: '∞', label: 'Potential Unlocked' },
+  { value: '15+', label: 'Značek vytvořeno' },
+  { value: '2+', label: 'Roky zkušeností' },
+  { value: '∞', label: 'Potenciál odemčen' },
 ]
 
 /* "Slide up on view" wrapper — reduced margin so it triggers
@@ -105,7 +105,7 @@ export default function About() {
         <FadeUp className="mb-12 sm:mb-16">
           <span className="inline-flex items-center gap-3 font-space text-[10px] tracking-[0.45em] uppercase text-white/35">
             <span className="w-5 sm:w-6 h-px bg-white/35 inline-block" />
-            What We Do
+            Co děláme
           </span>
         </FadeUp>
 
@@ -113,16 +113,16 @@ export default function About() {
           {/* ── Left: headline + body ── */}
           <div className="lg:col-span-7">
             <div className="mb-6 sm:mb-8">
-              <HeadlineLine text="We build brands" delay={0} />
-              <HeadlineLine text="people talk about." delay={0.1} />
+              <HeadlineLine text="Budujeme značky," delay={0} />
+              <HeadlineLine text="o kterých se mluví." delay={0.1} />
             </div>
 
             <FadeUp delay={0.2}>
               <p className="font-space text-white/45 text-base sm:text-lg leading-[1.85] max-w-xl">
-                In a world drowning in noise, we create signal. Socialized is
-                an online brand identity agency that crafts visual systems,
-                digital experiences, and strategic narratives that make your
-                brand unforgettable.
+                Ve světě přeplněném hlukem vytváříme signál. Socialized je
+                online brand agentura, která tvoří vizuální systémy,
+                digitální zážitky a strategické příběhy, jež učiní
+                vaši značku nezapomenutelnou.
               </p>
             </FadeUp>
 
@@ -132,7 +132,7 @@ export default function About() {
                 data-cursor="pointer"
                 className="group inline-flex items-center gap-3 font-space text-xs text-white/50 hover:text-white active:text-white tracking-[0.3em] uppercase transition-colors duration-300"
               >
-                <span>See our work</span>
+                <span>Naše práce</span>
                 <span className="inline-block group-hover:translate-x-2 group-active:translate-x-2 transition-transform duration-300">
                   →
                 </span>
